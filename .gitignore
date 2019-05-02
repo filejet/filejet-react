@@ -1,0 +1,12 @@
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+node_modules
+coverage
+build
+dist
+yarn-error.log
+yarn.lock
+__diff_output__

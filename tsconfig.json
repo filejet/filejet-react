@@ -1,0 +1,14 @@
+{
+  "extends": "@deftomat/opinionated/tsconfig.json",
+  "compilerOptions": {
+    "lib": ["es2017", "esnext.asynciterable"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es6",
+    "outDir": "./dist/esm",
+    "jsx": "react"
+  },
+  "exclude": ["node_modules", "dist"]
+}
