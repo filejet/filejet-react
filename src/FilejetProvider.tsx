@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode } from 'react';
+import { ExtractOptional } from './utils';
 
 export const context = createContext<Required<FilejetConfig> | null>(null);
 
@@ -6,7 +7,7 @@ context.displayName = 'FilejetContext';
 
 const { Provider } = context;
 
-const defaultConfig = {
+const defaultConfig: ExtractOptional<FilejetConfig> = {
   maxDPR: 2
 };
 

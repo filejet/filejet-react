@@ -1,7 +1,6 @@
 import React, { ImgHTMLAttributes } from 'react';
 import { context } from './FilejetProvider';
-
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+import { Omit, toFileUrl, toSizeMutation } from './utils';
 
 export interface ImgProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'srcSet'> {
   readonly src: string;
@@ -62,39 +61,7 @@ function toImageSrcset(props: ImgProps, storageId: string, maxDPR: number): stri
 
   const { width, height } = props;
 
-  return Array.from({ length: Math.floor(maxDPR) }, (v, k) => k + 1)
+  return Array.from({ length: Math.floor(maxDPR) }, (_, i) => i + 1)
     .map(dpr => `${toFileUrl(storageId, src, toSizeMutation(width, height, dpr))} ${dpr}x`)
     .join(',');
-}
-
-function toFileUrl(storageId: string, src: string, mutation: string | null) {
-  if (mutation === '') {
-    if (isFileId(src)) return `https://${storageId}.5gcdn.net/${src}`;
-    return src;
-  }
-
-  const normalizedMutation =
-    mutation == null
-      ? 'auto'
-      : [
-          ...mutation
-            .split(',')
-            .filter(m => m !== 'auto')
-            .map(m => m.trim()),
-          'auto'
-        ].join(',');
-
-  if (isFileId(src)) return `https://${storageId}.5gcdn.net/${src}/${normalizedMutation}`;
-  return `https://${storageId}.5gcdn.net/ext/${normalizedMutation}?src=${encodeURIComponent(src)}`;
-}
-
-function isFileId(value: string): boolean {
-  return value.length === 32 && value.match(/^[a-z0-9]*$/) != null;
-}
-
-function toSizeMutation(width?: number, height?: number, dpr = 1): string | null {
-  if (width != null && height != null) return `fit_${width * dpr}x${height * dpr}`;
-  if (width != null && height == null) return `resize_${width * dpr}`;
-  if (width == null && height != null) return `resize_x${height * dpr}`;
-  return null;
 }
