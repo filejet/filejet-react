@@ -14,9 +14,11 @@ npm install filejet-react --save
 import { FilejetProvider, Img } from 'filejet-react';
 import React from 'react';
 
+const filejetConfig = { storageId: 'abc123' };
+
 function App() {
   return (
-    <FilejetProvider config={{ storageId: 'abc123' }}>
+    <FilejetProvider config={filejetConfig}>
       <Img src="https://example.com/img.jpg" width={200} height={200} alt="..." />
     </FilejetProvider>
   );

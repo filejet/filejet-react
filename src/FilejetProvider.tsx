@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode } from 'react';
+import React, { createContext, PureComponent, ReactNode } from 'react';
 import { ExtractOptional } from './utils';
 
 export const context = createContext<Required<FilejetConfig> | null>(null);
@@ -16,9 +16,12 @@ interface Props {
   readonly children: ReactNode;
 }
 
-export function FilejetProvider({ config, children }: Props) {
-  const configuration = { ...defaultConfig, ...config };
-  return <Provider value={configuration}>{children}</Provider>;
+export class FilejetProvider extends PureComponent<Props> {
+  render() {
+    const { config, children } = this.props;
+    const configuration = { ...defaultConfig, ...config };
+    return <Provider value={configuration}>{children}</Provider>;
+  }
 }
 
 export interface FilejetConfig {
